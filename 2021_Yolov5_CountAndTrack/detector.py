@@ -13,9 +13,8 @@ class Get_Pred():
 
     def process(self, img):
         model = attempt_load(self.modelpath, map_location=self.device)
-        names = model.module.names if hasattr(model, 'module') else model.names
         num = 0
-        showimg = img.copy()
+        img_copy = img.copy()
         pred_list = []
         with torch.no_grad():
             img = letterbox(img, new_shape=640)[0]
@@ -25,20 +24,13 @@ class Get_Pred():
             img = torch.from_numpy(img).to(self.device)
             img = img.float()  # uint8 to fp16/32
             img /= 255.0  # 0 - 255 to 0.0 - 1.0
-            if img.ndimension() == 3:
-                img = img.unsqueeze(0)
-
-            # 前向推理
             pred = model(img, augment=False)[0]
-
             # NMS去除多余的框
             pred = non_max_suppression(pred, 0.25, 0.45, agnostic=False)
-            # print(pred)
-            # Process detections
             for i, det in enumerate(pred):
                 if det is not None and len(det):
-                    # Rescale boxes from img_size to im0 size
-                    det[:, :4] = scale_coords(img.shape[2:], det[:, :4], showimg.shape).round()
+                    # Rescale
+                    det[:, :4] = scale_coords(img.shape[2:], det[:, :4], img_copy.shape).round()
 
                     for *xyxy, conf, cls in reversed(det):
                         num = num + 1
