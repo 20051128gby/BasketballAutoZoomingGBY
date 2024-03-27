@@ -109,7 +109,7 @@ def detect_video(path):
 
 
 if __name__ == '__main__':
-    model_path = r'E:\vscodeP\AI\basketballAutoZooming\2021_Yolov5_CountAndTrack\weights\yolov5s.pt'
+    model_path = r'E:\vscodeP\AI\basketballAutoZooming\base_on_2021_Yolov5\weights\yolov5s.pt'
     pred_path = r'E:\vscodeP\data\Video\3月25日.mp4'
     detect_video(pred_path)
     video.release()
