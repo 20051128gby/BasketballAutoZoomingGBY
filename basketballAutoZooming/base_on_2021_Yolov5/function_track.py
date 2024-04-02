@@ -9,11 +9,19 @@ import numpy as np
 import myUtils
 
 final_list=[]
-pred_path = r'E:\vscodeP\data\Video\3月25日.mp4'
+pred_path = r'E:\vscodeP\data\Video\4月2日 (1).mp4'
 model_path = r'E:\vscodeP\AI\basketballAutoZooming\base_on_2021_Yolov5\weights\yolov5s.pt'
 
 
 capture = cv2.VideoCapture(pred_path)
+start_frame = 2199  
+
+# 跳转到指定帧
+is_success = capture.set(cv2.CAP_PROP_POS_FRAMES, start_frame)
+if not is_success:
+    print("无法跳转到指定帧。")
+
+
 ret, img = capture.read()
 frame_height, frame_width, channels = img.shape          
 video_filename = 'output.mp4'
@@ -23,7 +31,8 @@ video = cv2.VideoWriter(video_filename, fourcc, fps, (frame_width, frame_height)
 
 def detect_video():
     global capture
-    cntFram = 0
+    global start_frame
+    cntFram = start_frame
     temp = 0
     while True:
         ret, img = capture.read()
@@ -47,8 +56,6 @@ def detect_video():
         #for xyxy in pred_xyxy:
             #plot_one_box(xyxy, img, label=None, color=(255, 255, 0), line_thickness=1)
             #print((xyxy))
-        
-
         # cv2.imwrite("whole.jpg", img)  
         if temp == 100:
             global final_list 
