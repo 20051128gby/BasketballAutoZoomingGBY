@@ -32,6 +32,8 @@ def detect_video():
         if ret is not True:
             break
         detect = Get_Pred(model_path)
+
+
         value_json = detect.process(img)
         value = json.loads(value_json)
         
@@ -42,16 +44,20 @@ def detect_video():
         #display_cropped_images(cropList)
 
 
-        for xyxy in pred_xyxy:
+        #for xyxy in pred_xyxy:
             #plot_one_box(xyxy, img, label=None, color=(255, 255, 0), line_thickness=1)
-            print((xyxy))
+            #print((xyxy))
         
 
         # cv2.imwrite("whole.jpg", img)  
-        if temp == 25:
+        if temp == 100:
             global final_list 
-            final_list= myUtils.resize_with_white_background(cropList)    
-            myUtils.print_confidence_score(final_list, cntFram)
+            final_list= myUtils.resize_with_white_background(cropList)   
+            i=1
+            for image in final_list:
+                cv2.imwrite(str(cntFram)+"_"+str(i)+".jpg",np.array(image)) 
+                i+=1
+            #myUtils.print_confidence_score(final_list, cntFram)
             temp =0 
         #a = int(input("执行下一帧"))
         # cv2.imshow('Video', img)      
