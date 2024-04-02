@@ -23,10 +23,12 @@ video = cv2.VideoWriter(video_filename, fourcc, fps, (frame_width, frame_height)
 
 def detect_video():
     global capture
+    cntFram = 0
     temp = 0
-    while temp<1:
+    while True:
         ret, img = capture.read()
         temp+=1
+        cntFram+=1
         if ret is not True:
             break
         detect = Get_Pred(model_path)
@@ -46,12 +48,11 @@ def detect_video():
         
 
         # cv2.imwrite("whole.jpg", img)  
-        
-        global final_list 
-        final_list= myUtils.resize_with_white_background(cropList)
-
-        
-        myUtils.print_confidence_score(final_list, temp)
+        if temp == 25:
+            global final_list 
+            final_list= myUtils.resize_with_white_background(cropList)    
+            myUtils.print_confidence_score(final_list, cntFram)
+            temp =0 
         #a = int(input("执行下一帧"))
         # cv2.imshow('Video', img)      
              
@@ -67,7 +68,7 @@ def detect_video():
 if __name__ == '__main__':
    
     
-    detect_video(pred_path)
+    detect_video()
     video.release()
     capture.release()
     cv2.destroyAllWindows()

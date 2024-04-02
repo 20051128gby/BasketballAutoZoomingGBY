@@ -114,7 +114,7 @@ size = (224, 224)
 def print_confidence_score(final_list,cntFram):
     i = 0
     for image in final_list:
-            cv2.imwrite("Fram"str(cntFram)+"_"+str(i)+".jpg",np.array(image))  
+            cv2.imwrite(r'"E:\vscodeP\AI\image\Fram"+str(cntFram)+"_"+str(i)+".jpg"',np.array(image))  
         # Disable scientific notation for clarity
             i+=1
             np.set_printoptions(suppress=True)
