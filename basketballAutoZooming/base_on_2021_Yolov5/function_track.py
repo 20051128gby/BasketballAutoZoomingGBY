@@ -9,12 +9,12 @@ import numpy as np
 import myUtils
 
 final_list=[]
-pred_path = r'E:\vscodeP\data\Video\4月2日 (1).mp4'
+pred_path = r'E:\vscodeP\data\Video\TestData.mp4'
 model_path = r'E:\vscodeP\AI\basketballAutoZooming\base_on_2021_Yolov5\weights\yolov5s.pt'
 
 
 capture = cv2.VideoCapture(pred_path)
-start_frame = 2199  
+start_frame = 0 
 
 # 跳转到指定帧
 is_success = capture.set(cv2.CAP_PROP_POS_FRAMES, start_frame)
@@ -22,12 +22,12 @@ if not is_success:
     print("无法跳转到指定帧。")
 
 
-ret, img = capture.read()
-frame_height, frame_width, channels = img.shape          
-video_filename = 'output.mp4'
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
-fps = 20
-video = cv2.VideoWriter(video_filename, fourcc, fps, (frame_width, frame_height))
+# ret, img = capture.read()
+# frame_height, frame_width, channels = img.shape          
+# video_filename = 'output.avi'
+# fourcc = cv2.VideoWriter_fourcc(*'XVID')
+# fps = 20
+# video = cv2.VideoWriter(video_filename, fourcc, fps, (frame_width, frame_height))
 
 def detect_video():
     global capture
@@ -56,17 +56,17 @@ def detect_video():
         #for xyxy in pred_xyxy:
             #plot_one_box(xyxy, img, label=None, color=(255, 255, 0), line_thickness=1)
             #print((xyxy))
-        # cv2.imwrite("whole.jpg", img)  
-        if temp == 100:
+        
+
+
+
+        if temp == 35:
             global final_list 
-            final_list= myUtils.resize_with_white_background(cropList)   
-            i=1
-            for image in final_list:
-                cv2.imwrite(str(cntFram)+"_"+str(i)+".jpg",np.array(image)) 
-                i+=1
-            #myUtils.print_confidence_score(final_list, cntFram)
-            temp =0 
-        #a = int(input("执行下一帧"))
+            final_list= myUtils.resize_with_white_background(cropList)        
+            myUtils.print_confidence_score(final_list, cntFram)
+            temp=0
+            
+            a = int(input("执行下一帧"))
         # cv2.imshow('Video', img)      
              
 
@@ -82,6 +82,6 @@ if __name__ == '__main__':
    
     
     detect_video()
-    video.release()
+    #video.release()
     capture.release()
     cv2.destroyAllWindows()

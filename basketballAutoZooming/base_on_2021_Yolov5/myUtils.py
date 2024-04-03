@@ -1,4 +1,5 @@
 import json
+import os
 import cv2
 import numpy as np
 from utils.plots import plot_one_box
@@ -114,10 +115,7 @@ size = (224, 224)
 def print_confidence_score(final_list,cntFram):
     i = 0
     for image in final_list:
-            cv2.imwrite(str(cntFram)+"_"+str(i)+".jpg",np.array(image))  
         # Disable scientific notation for clarity
-            print("test")
-            i+=1
             np.set_printoptions(suppress=True)
 
 
@@ -149,5 +147,12 @@ def print_confidence_score(final_list,cntFram):
             confidence_score = prediction[0][index]
 
     # Print prediction and confidence score
-            print("Class:", class_name[2:], end="")
-            print("Confidence Score:", confidence_score)
+            print("Class:", str(class_name[2:9]), end=" ")
+            print("Confidence Score:", str(confidence_score))
+            # 指定保存图像的文件夹路径
+           
+            file_name = str(class_name[2:9])+"__"+str(confidence_score)+".jpg"          
+            cv2.imwrite(file_name,np.array(image))
+                    
+            
+
