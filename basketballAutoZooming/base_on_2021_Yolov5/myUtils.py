@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import cv2
 import numpy as np
 from utils.plots import plot_one_box
@@ -150,8 +151,9 @@ def print_confidence_score(final_list,cntFram):
             print("Class:", str(class_name[2:9]), end=" ")
             print("Confidence Score:", str(confidence_score))
             # 指定保存图像的文件夹路径
-           
-            file_name = str(class_name[2:9])+"__"+str(confidence_score)+".jpg"          
+            
+            file_name = re.sub(r'[^a-zA-Z0-9]', '', (str(class_name[2:9])))+"__"+ re.sub(r'[^a-zA-Z0-9]', '', str(confidence_score))  +".jpg"    
+            print(file_name)      
             cv2.imwrite(file_name,np.array(image))
                     
             

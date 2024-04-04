@@ -6,7 +6,7 @@ import numpy as np
 np.set_printoptions(suppress=True)
 
 # Load the model
-model = load_model(r"E:\vscodeP\AI\basketballAutoZooming\base_on_2021_Yolov5\keras_model.h5", compile=False)
+model = load_model(r"E:\vscodeP\AI\basketballAutoZooming\base_on_2021_Yolov5\keras_model_.h5", compile=False)
 
 # Load the labels
 class_names = open(r"E:\vscodeP\AI\basketballAutoZooming\base_on_2021_Yolov5\labels.txt", "r").readlines()
@@ -17,7 +17,7 @@ class_names = open(r"E:\vscodeP\AI\basketballAutoZooming\base_on_2021_Yolov5\lab
 data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
 # Replace this with the path to your image
-image = Image.open(r"E:\vscodeP\AI\whole.jpg").convert("RGB")
+image = Image.open(r"image/afterClassify/wrong/referee__0.96965796.jpg").convert("RGB")
 
 # resizing the image to be at least 224x224 and then cropping from the center
 size = (224, 224)

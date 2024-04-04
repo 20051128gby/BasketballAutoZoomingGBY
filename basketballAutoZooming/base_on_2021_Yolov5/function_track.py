@@ -1,4 +1,5 @@
 import json
+import re
 import cv2
 import numpy as np
 from utils.plots import plot_one_box
@@ -28,6 +29,12 @@ if not is_success:
 # fourcc = cv2.VideoWriter_fourcc(*'XVID')
 # fps = 20
 # video = cv2.VideoWriter(video_filename, fourcc, fps, (frame_width, frame_height))
+
+
+
+
+
+
 
 def detect_video():
     global capture
@@ -66,7 +73,7 @@ def detect_video():
             myUtils.print_confidence_score(final_list, cntFram)
             temp=0
             
-            a = int(input("执行下一帧"))
+            
         # cv2.imshow('Video', img)      
              
 
