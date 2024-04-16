@@ -12,7 +12,6 @@ import math
 from yaml import load_all
  
 class PoseEstimator:
-    """Estimate head pose according to the facial landmarks"""
  
     def __init__(self, img_size=(480, 640)):
         self.size = img_size
@@ -159,10 +158,7 @@ class PoseEstimator:
         return pitch, yaw, roll
  
     def solve_pose_by_6_points(self, image_points):
-        """
-        Solve pose from image points
-        Return (rotation_vector, translation_vector) as pose.
-        """
+       
         points_6 = np.float32([
                     image_points[30], image_points[36], image_points[45],
                     image_points[48], image_points[54], image_points[8]])
@@ -244,14 +240,17 @@ class PoseEstimator:
         cv2.line(image, tuple(point_2d[3]), tuple(
             point_2d[8]), color, line_width, cv2.LINE_AA)
  
-def run(pic_path):
-    points_68 = load_all(pic_path) #加载68个人脸特征点,自行实现
+
+ 
+if __name__ == "__main__":
+    pic_path=r""
+    points_68 = load_all(pic_path) #加载68个人脸特征点
  
     img = cv2.imread(pic_path)
     pose_estimator = PoseEstimator(img_size=img.shape)
     #pose = pose_estimator.solve_pose_by_6_points(points_68)
     #pose = pose_estimator.solve_pose_by_14_points(points_68)
-    #pose = pose_estimator.solve_pose_by_68_points(points_68)
+    pose = pose_estimator.solve_pose_by_68_points(points_68)
     pitch, yaw, roll = pose_estimator.get_euler_angle(pose[0])
  
     def _radian2angle(r):
@@ -272,12 +271,3 @@ def run(pic_path):
     cv2.imshow('img', img)
     if cv2.waitKey(-1) == 27:
         pass
- 
-    return 0
- 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("%(prog)s IMAGE_PATH")
-        sys.exit(-1)
- 
-    sys.exit(run(sys.argv[1]))
