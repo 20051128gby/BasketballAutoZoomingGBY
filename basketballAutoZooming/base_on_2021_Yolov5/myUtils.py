@@ -114,6 +114,9 @@ model = load_model(r"E:\vscodeP\AI\basketballAutoZooming\base_on_2021_Yolov5\ker
 class_names = open(r"E:\vscodeP\AI\basketballAutoZooming\base_on_2021_Yolov5\labels.txt", "r").readlines()
 size = (224, 224)
 def print_confidence_score(final_list,cntFram):
+    className=[]
+    confidenceScore=[]
+
     i = 0
     for image in final_list:
         # Disable scientific notation for clarity
@@ -146,15 +149,21 @@ def print_confidence_score(final_list,cntFram):
             index = np.argmax(prediction)
             class_name = class_names[index]
             confidence_score = prediction[0][index]
-
-    # Print prediction and confidence score
-            print("Class:", str(class_name[2:9]), end=" ")
-            print("Confidence Score:", str(confidence_score))
-            # 指定保存图像的文件夹路径
             
-            file_name = re.sub(r'[^a-zA-Z0-9]', '', (str(class_name[2:9])))+"__"+ re.sub(r'[^a-zA-Z0-9]', '', str(confidence_score))  +".jpg"    
-            print(file_name)      
-            cv2.imwrite(file_name,np.array(image))
+            print(index)
+            print(confidence_score)
+            className.append(index)
+            confidenceScore.append(confidence_score)
+            i+=1
+    return className,confidenceScore
+    # Print prediction and confidence score
+            # print("Class:", str(class_name[2:9]), end=" ")
+            # print("Confidence Score:", str(confidence_score))
+            # # 指定保存图像的文件夹路径
+            
+            # file_name = re.sub(r'[^a-zA-Z0-9]', '', (str(class_name[2:9])))+"__"+ re.sub(r'[^a-zA-Z0-9]', '', str(confidence_score))  +".jpg"    
+            # print(file_name)      
+            # cv2.imwrite(file_name,np.array(image))
                     
             
 

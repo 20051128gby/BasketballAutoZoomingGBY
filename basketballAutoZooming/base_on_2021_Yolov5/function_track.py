@@ -22,7 +22,9 @@ is_success = capture.set(cv2.CAP_PROP_POS_FRAMES, start_frame)
 if not is_success:
     print("无法跳转到指定帧。")
 
-
+className=[]
+confidenceScore=[]
+referee=[]
 # ret, img = capture.read()
 # frame_height, frame_width, channels = img.shape          
 # video_filename = 'output.avi'
@@ -39,6 +41,8 @@ if not is_success:
 def detect_video():
     global capture
     global start_frame
+    global confidenceScore
+    global className
     cntFram = start_frame
     temp = 0
     while True:
@@ -66,18 +70,26 @@ def detect_video():
         
 
 
-
+        
         if temp == 35:
             global final_list 
             final_list= myUtils.resize_with_white_background(cropList)        
-            myUtils.print_confidence_score(final_list, cntFram)
+            className,confidenceScore=myUtils.print_confidence_score(final_list, cntFram)
             temp=0
-            
-            
-        # cv2.imshow('Video', img)      
-             
+        
+            for i in range(len(className)):
+                print(i)
+                if(className[i]==0 and confidenceScore[i]>0.95):
+                    referee.append(cropList[i])
 
-        #video.write(img)
+
+
+            
+            
+                    file_name =str(i)+"_"+str(cntFram) +".jpg"    
+                  
+                    cv2.imwrite(file_name,np.array(cropList[i]))
+
         if cv2.waitKey(1) & 0xFF == ord('q'):
             
             break
